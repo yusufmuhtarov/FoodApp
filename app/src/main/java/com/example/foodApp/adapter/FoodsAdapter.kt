@@ -8,6 +8,7 @@ import com.example.foodapp.R
 import com.example.foodapp.databinding.FoodItemBinding
 
 class FoodsAdapter(
+    private val onClickToFood: (model: ModelFood) -> Unit,
     private val onDeleteFoodClick: (index: Int) -> Unit,
 ) : RecyclerView.Adapter<FoodsAdapter.FoodAppViewHolder>() {
 
@@ -25,6 +26,9 @@ class FoodsAdapter(
         fun bind(model: ModelFood) {
             binding.foodNameTv.text = model.foodName
             binding.foodPriceTv.text = model.foodPrice
+            binding.itemCard.setOnClickListener {
+                onClickToFood.invoke(model)
+            }
             binding.deleteFoodBtm.setOnClickListener {
                 onDeleteFoodClick.invoke(foodList.indexOf(model))
             }
@@ -41,10 +45,13 @@ class FoodsAdapter(
         return FoodAppViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: FoodsAdapter.FoodAppViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: FoodAppViewHolder,
+        position: Int
+    ) {
         holder.bind(foodList[position])
     }
 
-    override fun getItemCount(): Int = 10
+    override fun getItemCount(): Int = foodList.size
 
 }

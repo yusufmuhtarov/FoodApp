@@ -6,17 +6,21 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
-class FoodSharedPreferences(
+class BasketSharedPreference (
     private val context: Context
-) {
+){
 
     private val sharedPreference = context.getSharedPreferences(
-        SHARED_PREFERENCE_KEY, Context.MODE_PRIVATE
+        FoodSharedPreferences.SHARED_PREFERENCE_KEY, Context.MODE_PRIVATE
     )
 
+    companion object {
+        const val SHARED_PREFERENCE_KEY = "SHARED_PREFERENCE_KEY"
+        const val SHARED_PREF = "YUSUF"
+    }
     fun getFood(): List<ModelFood> {
         val gson = Gson()
-        val json = sharedPreference.getString(SHARED_PREF, null)
+        val json = sharedPreference.getString(FoodSharedPreferences.SHARED_PREF, null)
         val type: Type = object : TypeToken<ArrayList<ModelFood?>?>() {}.type
         val foodList = gson.fromJson<ArrayList<ModelFood>>(json, type)
         return foodList ?: emptyList()
@@ -26,7 +30,7 @@ class FoodSharedPreferences(
         val foods = getFood().toMutableList()
         foods.add(0, foodModel)
         val notesGson = Gson().toJson(foods)
-        sharedPreference.edit().putString(SHARED_PREF, notesGson).apply()
+        sharedPreference.edit().putString(FoodSharedPreferences.SHARED_PREF, notesGson).apply()
     }
 
     fun deleteAllFood() {
@@ -38,13 +42,7 @@ class FoodSharedPreferences(
         if (index in 0 until getAllFood.size) {
             getAllFood.removeAt(index)
             val foodGsonString = Gson().toJson(getAllFood)
-            sharedPreference.edit().putString(SHARED_PREF, foodGsonString).apply()
+            sharedPreference.edit().putString(FoodSharedPreferences.SHARED_PREF, foodGsonString).apply()
         }
     }
-
-    companion object {
-        const val SHARED_PREFERENCE_KEY = "SHARED_PREFERENCE_KEY"
-        const val SHARED_PREF = "YUSUF"
-    }
 }
-

@@ -1,9 +1,11 @@
 package com.example.foodApp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.foodApp.adapter.FoodsAdapter
@@ -27,7 +29,26 @@ class FirstScreenFragment : Fragment() {
         FoodsAdapter(onDeleteFoodClick = { index ->
             sharedPreferences.deleteFoodByIndex(index)
             setUpViewsAndAdapter()
-        })
+        },
+            onClickToFood = {
+                findNavController().navigate(
+                    R.id.action_firstScreenFragment_to_foodScreen,
+                    bundleOf(FOOD_KEY to it)
+                )
+            })
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View = binding.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpClickListener()
+        setUpViewsAndAdapter()
+
     }
 
     private fun setUpViewsAndAdapter() {
@@ -65,29 +86,19 @@ class FirstScreenFragment : Fragment() {
         binding.firstIv.visibility = View.VISIBLE
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View = binding.root
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setUpClickListener()
-        setUpViewsAndAdapter()
-    }
-
     private fun setUpClickListener() = binding.apply {
         addNoteBtn.setOnClickListener {
             findNavController().navigate(R.id.action_firstScreenFragment_to_addFragment)
+        }
+        binding.backCard.setOnClickListener {
+            findNavController().navigate(R.id.action_firstScreenFragment_to_startFragment)
         }
         deleteCard.setOnClickListener {
             showConfirmDeleteDialog()
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.backCard.setOnClickListener {
-            findNavController().navigate(R.id.action_firstScreenFragment_to_startFragment)
-        }
+    companion object {
+        const val FOOD_KEY = "FOOD_KEY"
     }
 }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.foodapp.R
 import com.example.foodapp.databinding.ActivityMainBinding
 
@@ -19,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         navigationController = findNavController(R.id.nav_host_fragment)
-        setContentView(binding.root)
-
+        binding.navigationBottom.setupWithNavController(findNavController(R.id.nav_host_fragment))
     }
 }

@@ -6,12 +6,16 @@
     app:startDestination="@id/startFragment">
 
     <fragment
-        android:id="@+id/basketFragment"
+        android:id="@+id/basketIcon"
         android:name="com.example.foodApp.fragments.BasketFragment"
         android:label="fragment_basket"
-        tools:layout="@layout/fragment_basket" />
+        tools:layout="@layout/fragment_basket" >
+        <action
+            android:id="@+id/action_basketIcon_to_homeIcon"
+            app:destination="@id/homeIcon" />
+    </fragment>
     <fragment
-        android:id="@+id/firstScreenFragment"
+        android:id="@+id/homeIcon"
         android:name="com.example.foodApp.fragments.FirstScreenFragment"
         android:label="fragment_first_screen"
         tools:layout="@layout/fragment_first_screen" >
@@ -20,16 +24,23 @@
             app:destination="@id/startFragment" />
         <action
             android:id="@+id/action_firstScreenFragment_to_basketFragment"
-            app:destination="@id/basketFragment" />
+            app:destination="@id/basketIcon" />
         <action
             android:id="@+id/action_firstScreenFragment_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_firstScreenFragment_to_foodScreen"
+            app:destination="@id/foodScreen" />
     </fragment>
     <fragment
         android:id="@+id/foodScreen"
         android:name="com.example.foodApp.fragments.FoodScreen"
         android:label="fragment_food_screen"
-        tools:layout="@layout/fragment_food_screen" />
+        tools:layout="@layout/fragment_food_screen" >
+        <action
+            android:id="@+id/action_foodScreen_to_firstScreenFragment"
+            app:destination="@id/homeIcon" />
+    </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.foodApp.fragments.AddFragment"
@@ -37,7 +48,7 @@
         tools:layout="@layout/fragment_add" >
         <action
             android:id="@+id/action_addFragment_to_firstScreenFragment"
-            app:destination="@id/firstScreenFragment" />
+            app:destination="@id/homeIcon" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"
@@ -45,6 +56,6 @@
         android:label="StartFragment" >
         <action
             android:id="@+id/action_startFragment_to_firstScreenFragment"
-            app:destination="@id/firstScreenFragment" />
+            app:destination="@id/homeIcon" />
     </fragment>
 </navigation>

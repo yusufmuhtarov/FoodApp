@@ -21,4 +21,7 @@
     <string name="delete">Delete</string>
     <string name="save">Save food</string>
     <string name="price">Enter price of your food</string>
+    <string name="basket">Add To Basket</string>
+    <string name="spicy">Spicy grilled beef \n with special seasoning</string>
+    <string name="beef">Grilled Beef</string>
 </resources>

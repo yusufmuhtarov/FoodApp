@@ -27,6 +27,5 @@ class StartFragment : Fragment() {
                 R.id.action_startFragment_to_firstScreenFragment
             )
         }
-
     }
 }
